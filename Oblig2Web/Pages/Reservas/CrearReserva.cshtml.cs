@@ -10,24 +10,23 @@ namespace Oblig2Web.Pages.Reservas
     {
         private readonly AppDbContext _appContext;
         public List<Usuario> UsuariosForEach { get; set; }
+        public List<Habitacion> HabsForEach { get; set; }
         public CrearReservaModel(AppDbContext contexto)
         {
             _appContext = contexto;
+            UsuariosForEach = contexto.Usuarios.ToList();
+            HabsForEach = contexto.Habitaciones.ToList();
         }
         [BindProperty] //Esto vincula la pagina con el modelo >>>
         public Reserva Reserva { get; set; }
         [BindProperty]
+        public string MetodoPago { get; set; }
         public Pago Pago { get; set; }
-        public List<Habitacion> HabsForEach { get; set; }
 
         [TempData]
         public string Message { get; set; }
 
-        public async Task OnGet()
-        {
-            UsuariosForEach = await _appContext.Usuarios.ToListAsync();
-            HabsForEach = await _appContext.Habitaciones.ToListAsync();
-        }
+        public void OnGet() {}
 
         public async Task<IActionResult> OnPost()
         {
@@ -42,12 +41,15 @@ namespace Oblig2Web.Pages.Reservas
                 Reserva = new Reserva();
             }
 
-            foreach (var item in HabsForEach)
+            if (Reserva.HabitacionElegida == null)
             {
-                if (Reserva.HabitacionId == item.IdHabitacion)
+                foreach (var item in HabsForEach)
                 {
-                    Reserva.HabitacionElegida = item;
-                    Reserva.NumHabitacion = item.NumHabitacion;
+                    if (Reserva.HabitacionId == item.IdHabitacion)
+                    {
+                        Reserva.HabitacionElegida = item;
+                        Reserva.NumHabitacion = item.NumHabitacion;
+                    }
                 }
             }
 
@@ -66,7 +68,7 @@ namespace Oblig2Web.Pages.Reservas
 
             if (Pago == null)
             {
-                Pago = new Pago();
+                Pago = new Pago(Reserva, MetodoPago);
             }
 
             Pago.Reserva = Reserva;

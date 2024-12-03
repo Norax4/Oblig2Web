@@ -12,6 +12,7 @@ namespace Oblig2Web.Pages.Reservas
         public ModificarReservaModel(AppDbContext contexto)
         {
             _appContext = contexto;
+            HabsForEach = contexto.Habitaciones.ToList();
         }
         [BindProperty]
         public Reserva Reserva { get; set; }
@@ -21,7 +22,6 @@ namespace Oblig2Web.Pages.Reservas
         public async Task OnGet(int id)
         {
             Reserva = await _appContext.Reservas.FindAsync(id);
-            HabsForEach = await _appContext.Habitaciones.ToListAsync();
         }
 
         public async Task<IActionResult> OnPost()

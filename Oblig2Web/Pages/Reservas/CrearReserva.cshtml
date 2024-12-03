@@ -14,25 +14,25 @@
 			<div class="container" style="padding: 30px">
 				<div class="form-group row">
 					<div class="col-9">
-						<label class="col-6 col-form-label" asp-for="Reserva.IdUsuario"></label>
+						<label class="col-6 col-form-label" asp-for="Reserva.Usuario"></label>
 						<div class="col-6">
-							<select asp-for="Reserva.IdUsuario" class="form-control mb-2">
+							<select asp-for="Reserva.Usuario" class="form-control mb-2">
 								<option value="">Elija un Usuario &dArr;</option>
 								@foreach (var item in Model.UsuariosForEach)
 								{
 									<option value="@item.IdUsuario">@item.Nombre</option>
 								}
 							</select>
-							<span asp-validation-for="Reserva.IdUsuario" class="text-danger"></span>
+							<span asp-validation-for="Reserva.Usuario" class="text-danger"></span>
 						</div>
 					</div>
 				</div>
 
 				<div class="form-group row">
 					<div class="col-9">
-						<label class="col-6 col-form-label" asp-for="Reserva.HabitacionId"></label>
+						<label class="col-6 col-form-label" asp-for="Reserva.NumHabitacion"></label>
 						<div class="col-6">
-							<select asp-for="Reserva.HabitacionId" class="form-control mb-2">
+							<select asp-for="Reserva.HabitacionElegida" class="form-control mb-2">
 								<option value="">Elija una Habitación &dArr;</option>
 								@if (Model.HabsForEach != null && Model.HabsForEach.Any())
 								{
@@ -42,7 +42,7 @@
 									}
 								}
 							</select>
-							<span asp-validation-for="Reserva.HabitacionId" class="text-danger"></span>
+							<span asp-validation-for="Reserva.HabitacionElegida" class="text-danger"></span>
 						</div>
 					</div>
 				</div>
@@ -84,14 +84,14 @@
 
 				<div class="form-group row">
 					<div class="col-9">
-						<label class="col-6 col-form-label" asp-for="Pago.MetodoPago"></label>
+						<label class="col-6 col-form-label" asp-for="MetodoPago"></label>
 						<div class="col-6">
-							<select asp-for="Pago.MetodoPago" class="form-control mb-2">
+							<select asp-for="MetodoPago" class="form-control mb-2">
 								<option value="Tarjeta">Tarjeta</option>
 								<option value="Cheque">Cheque</option>
 								<option value="Efectivo">Efectivo</option>
 							</select>
-							<span asp-validation-for="Pago.MetodoPago" class="text-danger"></span>
+							<span asp-validation-for="MetodoPago" class="text-danger"></span>
 						</div>
 					</div>
 				</div>
