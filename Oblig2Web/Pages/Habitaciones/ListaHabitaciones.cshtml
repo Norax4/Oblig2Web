@@ -1,0 +1,61 @@
+﻿@page
+@model Oblig2Web.Pages.Habitaciones.ListaHabitacionesModel
+@{
+    ViewData["Title"] = "Lista de Habitaciones";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2 class="text-info">Lista de Habitaciones</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        @if (Model.HabitacionesL != null && Model.HabitacionesL.Any())
+        {
+            <br />
+
+            <br />
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        @Html.DisplayNameFor(m => m.HabitacionesL.First().NumHabitacion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.HabitacionesL.First().TipoHabitacion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.HabitacionesL.First().Tarifa)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.HabitacionesL.First().CantidadPersonas)
+                    </th>
+                </tr>
+                @foreach (var item in Model.HabitacionesL)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.NumHabitacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.TipoHabitacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Tarifa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.CantidadPersonas)
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        }
+        else
+        {
+            <p>No hay habitaciones disponibles</p>
+        }
+    </div>
+</div>

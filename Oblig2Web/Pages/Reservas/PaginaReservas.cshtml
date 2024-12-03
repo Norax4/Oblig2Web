@@ -1,0 +1,68 @@
+﻿@page
+@model Oblig2Web.Pages.Reservas.PaginaReservasModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2 class="text-info">Lista de Reservas hechas</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            @if (Model.Reservas != null && Model.Reservas.Any())
+            {
+                <br />
+
+                <br />
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+                        <th>
+                            @Html.DisplayNameFor(m => m.Reservas.First().NumHabitacion)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Reservas.First().FechaInicio)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Reservas.First().FechaFinal)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Reservas.First().FechaReserva)
+                        </th>
+                        <th>
+                            Acciones
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.Reservas)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.NumHabitacion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.FechaInicio)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.FechaFinal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.FechaReserva)
+                            </td>
+                            <td>
+                                <a asp-route-id="@item.IdReserva" asp-page="ModificarReserva" class="btn btn-primary btn-sm">Modificar Reserva</a>
+                                <button asp-page-handler="Delete" asp-route-itemid="@item.IdReserva" onclick="return confirm('¿Esta seguro de querer borrar el curso?')'" class="btn-danger btn-sm">Borrar</button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+
+            }
+            else
+            {
+                <p>No hay reservas hechas todavia</p>
+            }
+        </form>
+    </div>
+</div>

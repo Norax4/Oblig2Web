@@ -1,0 +1,115 @@
+﻿@page
+@model Oblig2Web.Pages.Reservas.CrearReservaModel
+@{
+	ViewData["Title"] = "Formulario de Reserva";
+}
+
+<div class="card">
+	<div class="card-header">
+		<h4 class="text-info">Realice su reserva</h4>
+	</div>
+	<div class="card-body">
+		<form method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="container" style="padding: 30px">
+				<div class="form-group row">
+					<div class="col-9">
+						<label class="col-6 col-form-label" asp-for="Reserva.IdUsuario"></label>
+						<div class="col-6">
+							<select asp-for="Reserva.IdUsuario" class="form-control mb-2">
+								<option value="">Elija un Usuario &dArr;</option>
+								@foreach (var item in Model.UsuariosForEach)
+								{
+									<option value="@item.IdUsuario">@item.Nombre</option>
+								}
+							</select>
+							<span asp-validation-for="Reserva.IdUsuario" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-9">
+						<label class="col-6 col-form-label" asp-for="Reserva.HabitacionId"></label>
+						<div class="col-6">
+							<select asp-for="Reserva.HabitacionId" class="form-control mb-2">
+								<option value="">Elija una Habitación &dArr;</option>
+								@if (Model.HabsForEach != null && Model.HabsForEach.Any())
+								{
+									@foreach (var item in Model.HabsForEach)
+									{
+										<option value="@item.IdHabitacion">@item.NumHabitacion </option>
+									}
+								}
+							</select>
+							<span asp-validation-for="Reserva.HabitacionId" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-9">
+						<label class="col-6 col-form-label" asp-for="Reserva.NumeroPersonas"></label>
+						<div class="col-6">
+							<select asp-for="Reserva.NumeroPersonas" class="form-control mb-2">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+							</select>
+							<span asp-validation-for="Reserva.NumeroPersonas" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-9">
+						<label class="col-6 col-form-label" asp-for="Reserva.FechaInicio"></label>
+						<div class="col-6">
+							<input asp-for="Reserva.FechaInicio" class="form-control mb-2" type="date" />
+							<span asp-validation-for="Reserva.FechaInicio" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-9">
+						<label class="col-6 col-form-label" asp-for="Reserva.FechaFinal"></label>
+						<div class="col-6">
+							<input asp-for="Reserva.FechaFinal" class="form-control mb-2" type="date" />
+							<span asp-validation-for="Reserva.FechaFinal" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-9">
+						<label class="col-6 col-form-label" asp-for="Pago.MetodoPago"></label>
+						<div class="col-6">
+							<select asp-for="Pago.MetodoPago" class="form-control mb-2">
+								<option value="Tarjeta">Tarjeta</option>
+								<option value="Cheque">Cheque</option>
+								<option value="Efectivo">Efectivo</option>
+							</select>
+							<span asp-validation-for="Pago.MetodoPago" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-sm-6 offset-sm-2">
+						<div class="row">
+							<div class="col-sm-6">
+								<input type="submit" value=" Crear " class="btn btn-primary btn-block" />
+							</div>
+							<div class="col-sm-6 text-right">
+								<a asp-page="/Habitaciones/ListaHabitaciones" class="btn btn-success">Ver la lista de habitaciones</a>
+								<a asp-page="/Reservas/PaginaReservas" class="btn btn-primary">Ver la lista de reservas</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

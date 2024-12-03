@@ -1,0 +1,81 @@
+﻿@page
+@model Oblig2Web.Pages.Reservas.ModificarReservaModel
+@{
+	ViewData["Titulo"] = "Modificación de Reserva";
+}
+<div class="card">
+	<div class="card-header">
+		<h2 class="">Modificar Reserva</h2>
+	</div>
+	<div class="card-body">
+		<form method="post">
+			<div asp-validation-summary="ModelOnly" class="textdanger"></div>
+			<!-- Se usa asp-for para vincular el campo oculto al Id del Curso -->
+			<input type="hidden" asp-for="Reserva.IdReserva" />
+			<div class="container" style="padding: 30px">
+				<div class="form-group row">
+					<div class="col-9">
+						<label class="col-6 col-form-label" asp-for="Reserva.HabitacionId"></label>
+						<div class="col-6">
+							<select asp-for="Reserva.HabitacionId" class="form-control mb-2">
+								@foreach (var item in Model.HabsForEach)
+								{
+									<option asp-for="@item.IdHabitacion">@item.NumHabitacion </option>
+								}
+							</select>
+							<span asp-validation-for="Reserva.HabitacionId" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-9">
+						<label class="col-6 col-form-label" asp-for="Reserva.NumeroPersonas"></label>
+						<div class="col-6">
+							<select asp-for="Reserva.NumeroPersonas" class="form-control mb-2">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+							</select>
+							<span asp-validation-for="Reserva.NumeroPersonas" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-9">
+						<label class="col-6 col-form-label" asp-for="Reserva.FechaInicio"></label>
+						<div class="col-6">
+							<input asp-for="Reserva.FechaInicio" class="form-control mb-2" type="date" />
+							<span asp-validation-for="Reserva.FechaInicio" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-9">
+						<label class="col-6 col-form-label" asp-for="Reserva.FechaFinal"></label>
+						<div class="col-6">
+							<input asp-for="Reserva.FechaFinal" class="form-control mb-2" type="date" />
+							<span asp-validation-for="Reserva.FechaFinal" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-sm-6 offset-sm-2">
+						<div class="row">
+							<div class="col-sm-6">
+								<input type="submit" value="Editar" class="btn btn-primary btn-block" />
+							</div>
+							<div class="col-sm-6 text-right">
+								<a asp-page="PaginaReservas" class="btn btn-info btn-outline-dark">Volver a la lista</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
