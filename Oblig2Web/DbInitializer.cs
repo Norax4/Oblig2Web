@@ -116,7 +116,10 @@ namespace Oblig2Web
 
 			if (!context.Habitaciones.Any())
 			{
-				context.AddRange(habitaciones);
+				foreach (var item in habitaciones)
+				{
+					context.Add(item);
+				}
 				context.SaveChanges();
 			}
 

@@ -4,26 +4,38 @@
 	ViewData["Title"] = "Formulario de Reserva";
 }
 
-<div class="card">
-	<div class="card-header">
-		<h4 class="text-info">Realice su reserva</h4>
+<div class="alert alert-primary justify-content-end" style="margin-left: 150px; margin-right: 150px" role="alert">
+	<h4 class="alert-heading text-center">¡Recuerde!</h4>
+	<hr />
+	<p>* ¡Las reservas no pueden durar más de 30 días!</p>
+	<p>* No puede hacer más de una reserva para la misma fecha.</p>
+	<p>* No puede elegir hospedar más personas del máximo de la habitación elegida.</p>
+</div>
+
+<div class="card align-content-center" style="border-color: lightblue">
+	<div class="card-header d-flex" style="background-color: lightblue">
+		<h3 class="text-black-50 me-auto">
+			Realice su reserva
+		</h3>
+		<a asp-page="/Habitaciones/ListaHabitaciones" class="btn btn-success text-black" style="background-color: white; border-color: lightblue">Ver la lista de habitaciones</a>
+		<a asp-page="/Reservas/PaginaReservas" class="btn btn-primary text-black" style="background-color: white; border-color: lightblue">Ver la lista de reservas</a>
 	</div>
 	<div class="card-body">
 		<form method="post">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-			<div class="container" style="padding: 30px">
+			<div class="container justify-content-center" style="padding: 30px">
 				<div class="form-group row">
 					<div class="col-9">
 						<label class="col-6 col-form-label" asp-for="Reserva.Usuario"></label>
 						<div class="col-6">
-							<select asp-for="Reserva.Usuario" class="form-control mb-2">
+							<select asp-for="Reserva.IdUsuario" class="form-control mb-2">
 								<option value="">Elija un Usuario &dArr;</option>
 								@foreach (var item in Model.UsuariosForEach)
 								{
 									<option value="@item.IdUsuario">@item.Nombre</option>
 								}
 							</select>
-							<span asp-validation-for="Reserva.Usuario" class="text-danger"></span>
+							<span asp-validation-for="Reserva.IdUsuario" class="text-danger"></span>
 						</div>
 					</div>
 				</div>
@@ -32,17 +44,14 @@
 					<div class="col-9">
 						<label class="col-6 col-form-label" asp-for="Reserva.NumHabitacion"></label>
 						<div class="col-6">
-							<select asp-for="Reserva.HabitacionElegida" class="form-control mb-2">
+							<select asp-for="Reserva.HabitacionId" class="form-control mb-2">
 								<option value="">Elija una Habitación &dArr;</option>
-								@if (Model.HabsForEach != null && Model.HabsForEach.Any())
-								{
-									@foreach (var item in Model.HabsForEach)
+									@foreach (var item in Model.HabsForEach.OrderBy(h => h.NumHabitacion))
 									{
 										<option value="@item.IdHabitacion">@item.NumHabitacion </option>
 									}
-								}
 							</select>
-							<span asp-validation-for="Reserva.HabitacionElegida" class="text-danger"></span>
+							<span asp-validation-for="Reserva.HabitacionId" class="text-danger"></span>
 						</div>
 					</div>
 				</div>
@@ -84,7 +93,7 @@
 
 				<div class="form-group row">
 					<div class="col-9">
-						<label class="col-6 col-form-label" asp-for="MetodoPago"></label>
+						<label class="col-6 col-form-label" asp-for="MetodoPago">Metodo de pago:</label>
 						<div class="col-6">
 							<select asp-for="MetodoPago" class="form-control mb-2">
 								<option value="Tarjeta">Tarjeta</option>
@@ -100,11 +109,7 @@
 					<div class="col-sm-6 offset-sm-2">
 						<div class="row">
 							<div class="col-sm-6">
-								<input type="submit" value=" Crear " class="btn btn-primary btn-block" />
-							</div>
-							<div class="col-sm-6 text-right">
-								<a asp-page="/Habitaciones/ListaHabitaciones" class="btn btn-success">Ver la lista de habitaciones</a>
-								<a asp-page="/Reservas/PaginaReservas" class="btn btn-primary">Ver la lista de reservas</a>
+								<input type="submit" value="Crear" class="btn btn-primary btn-block" style="background-color: cornflowerblue; border: none" />
 							</div>
 						</div>
 					</div>

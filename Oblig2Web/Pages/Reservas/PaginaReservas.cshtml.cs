@@ -12,34 +12,47 @@ namespace Oblig2Web.Pages.Reservas
         public PaginaReservasModel(AppDbContext contexto)
         {
             _appContext = contexto;
+            Usuarios = contexto.Usuarios.ToList();
         }
-        public IEnumerable<Reserva>? Reservas { get; set; }
+        public IEnumerable<Reserva> Reservas { get; set; }
         public IEnumerable<Usuario> Usuarios { get; set; }
         public IEnumerable<Pago> Pagos { get; set; }
+        [BindProperty]
+        public int IdUsuario { get; set; }
         [TempData]
         public string Message { get; set; }
         public async Task OnGet()
         {
             Reservas = await _appContext.Reservas.ToListAsync();
-            Usuarios = await _appContext.Usuarios.ToListAsync();
             Pagos = await _appContext.Pagos.ToListAsync();
+            foreach (var item in Reservas)
+            {
+                foreach (var user in Usuarios)
+                {
+                    if (item.IdUsuario == user.IdUsuario)
+                    {
+                        item.Usuario = user;
+                    }
+                }
+            }
         }
 
         public async Task<IActionResult> OnPostDelete(int id)
         {
             var reserva = await _appContext.Reservas.FindAsync(id);
 
-            if (reserva == null)
+            if (reserva != null)
+            {
+                var pago = await _appContext.Pagos.FindAsync(id);
+
+                _appContext.Pagos.Remove(pago);
+                _appContext.Reservas.Remove(reserva);
+                await _appContext.SaveChangesAsync();
+                Message = "Reserva borrada correctamente";
+            } else
             {
                 return NotFound();
             }
-
-            var pagoRes = await _appContext.Pagos.FindAsync(id);
-
-            _appContext.Reservas.Remove(reserva);
-            _appContext.Pagos.Remove(pagoRes);
-            await _appContext.SaveChangesAsync();
-            Message = "Reserva borrada correctamente";
 
             return RedirectToPage();
         }

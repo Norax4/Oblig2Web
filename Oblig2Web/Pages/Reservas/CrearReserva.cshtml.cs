@@ -11,11 +11,13 @@ namespace Oblig2Web.Pages.Reservas
         private readonly AppDbContext _appContext;
         public List<Usuario> UsuariosForEach { get; set; }
         public List<Habitacion> HabsForEach { get; set; }
+        public List<Reserva> ResForEach { get; set; }
         public CrearReservaModel(AppDbContext contexto)
         {
             _appContext = contexto;
             UsuariosForEach = contexto.Usuarios.ToList();
             HabsForEach = contexto.Habitaciones.ToList();
+            ResForEach = contexto.Reservas.ToList();
         }
         [BindProperty] //Esto vincula la pagina con el modelo >>>
         public Reserva Reserva { get; set; }
@@ -33,7 +35,13 @@ namespace Oblig2Web.Pages.Reservas
 
             if (!ModelState.IsValid)
             {
-                return Page();
+                Console.WriteLine("no");
+				Console.WriteLine(Reserva.IdUsuario);
+				Console.WriteLine(Reserva.HabitacionId);
+				Console.WriteLine(Reserva.NumeroPersonas);
+				Console.WriteLine(Reserva.FechaInicio);
+				Console.WriteLine(Reserva.FechaFinal);
+				return Page();
             }
 
             if (Reserva == null)
@@ -53,11 +61,24 @@ namespace Oblig2Web.Pages.Reservas
                 }
             }
 
+            if (Reserva.Usuario == null)
+            {
+                foreach (var item in UsuariosForEach)
+                {
+                    if (Reserva.IdUsuario == item.IdUsuario)
+                    {
+                        Reserva.Usuario = item;
+                    }
+                }
+            }
+
+            double tEstadia = (Reserva.FechaFinal - Reserva.FechaInicio).TotalDays;
+
             if (Reserva.FechaFinal <= Reserva.FechaInicio)
             {
                 return Page();
             }
-            else if ((Reserva.FechaFinal - Reserva.FechaInicio).TotalDays > 30)
+            else if (tEstadia > 30)
             {
                 return Page();
             }
@@ -66,12 +87,37 @@ namespace Oblig2Web.Pages.Reservas
                 return Page();
             }
 
+            foreach (var user in UsuariosForEach)
+            {
+                foreach (var res in ResForEach)
+                {
+                    if (user.IdUsuario == res.IdUsuario && res.FechaInicio == Reserva.FechaInicio)
+                    {
+                        return Page();
+                    }
+                }
+            }
+
+            foreach (var hab in HabsForEach)
+            {
+                foreach (var res in ResForEach)
+                {
+                    if (hab.IdHabitacion == res.HabitacionId && res.FechaInicio == Reserva.FechaInicio)
+                    {
+                        return Page();
+                    }
+                }
+            }
+
+            Reserva.FechaReserva = DateTime.Now;
+            Reserva.TiempoEstadia = (int)tEstadia;
+
             if (Pago == null)
             {
                 Pago = new Pago(Reserva, MetodoPago);
             }
 
-            Pago.Reserva = Reserva;
+            Reserva.Pago = Pago;
             _appContext.Add(Reserva);
             _appContext.Add(Pago);
             await _appContext.SaveChangesAsync();

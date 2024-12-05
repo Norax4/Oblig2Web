@@ -12,7 +12,7 @@ namespace Oblig2Web.Modelos
 		public int HuespedId { get; set; }
 		public Huesped Huesped { get; set; }
 		[Required]
-		[Display(Name = "Usuario Elegido")]
+		[Display(Name = "Usuario Elegido:")]
 		public string? Nombre { get; set; }
 		[Required]
 		[EmailAddress]
@@ -21,6 +21,7 @@ namespace Oblig2Web.Modelos
 		[Required]
 		[StringLength(40, MinimumLength = 8)]
 		public string? Contrasenia { get; set; }
+		public int? CountRes = 0;
 		public List<Reserva> Reservas { get; set; }
 
 		public Usuario()

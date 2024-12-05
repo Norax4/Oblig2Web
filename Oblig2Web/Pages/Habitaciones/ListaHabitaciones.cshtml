@@ -4,19 +4,17 @@
     ViewData["Title"] = "Lista de Habitaciones";
 }
 
-<div class="card">
-    <div class="card-header">
+<div class="card align-content-center" style="border-color: lightblue">
+    <div class="card-header d-flex" style="background-color: lightblue">
         <div class="row">
             <div class="col-sm-6">
-                <h2 class="text-info">Lista de Habitaciones</h2>
+                <h3 class="text-black-50 me-auto">Lista de Habitaciones</h3>
             </div>
         </div>
     </div>
     <div class="card-body">
         @if (Model.HabitacionesL != null && Model.HabitacionesL.Any())
         {
-            <br />
-
             <br />
             <table class="table table-striped border">
                 <tr class="table-secondary">
@@ -33,7 +31,7 @@
                         @Html.DisplayNameFor(m => m.HabitacionesL.First().CantidadPersonas)
                     </th>
                 </tr>
-                @foreach (var item in Model.HabitacionesL)
+                @foreach (var item in Model.HabitacionesL.OrderBy(h => h.NumHabitacion))
                 {
                     <tr>
                         <td>

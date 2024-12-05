@@ -9,7 +9,7 @@ namespace Oblig2Web.Modelos
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int IdReserva { get; set; }
 
-		[Required]
+		[Required(ErrorMessage = "Elegir una Habitación es obligatorio")]
 		[ForeignKey("Habitacion")]
 		public int HabitacionId { get; set; }
 		public Habitacion? HabitacionElegida { get; set; }
@@ -22,22 +22,27 @@ namespace Oblig2Web.Modelos
 		[Range(1, 4, ErrorMessage = "La cantidad de huespedes debe ser mayor a cero.")]
 		public int NumeroPersonas { get; set; }
 
-		[Required]
-		[Display(Name = "Fecha Inicial")]
+		[Required(ErrorMessage = "Debe elegir una fecha de llegada.")]
+		[Display(Name = "Fecha Inicial:")]
 		[Column(TypeName = "date")]
+		[DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}")]
 		public DateTime FechaInicio { get; set; }
-		[Required]
-		[Display(Name = "Fecha Final")]
+		[Required(ErrorMessage = "Debe elegir una fecha de salida.")]
+		[Display(Name = "Fecha Final:")]
 		[Column(TypeName = "date")]
-		public DateTime FechaFinal { get; set; }
-		public int TiempoEstadia { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime FechaFinal { get; set; }
+		public int TiempoEstadia = 0;
 		[Required]
-		[Column(TypeName = "date")]
-		public DateTime FechaReserva { get; set; }
+        [Display(Name = "Fecha de Reserva:")]
+        [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime? FechaReserva { get; set; }
 
 		[ForeignKey("Usuario")]
-		[Display(Name = "Usuario Correspondiente")]
+		[Required(ErrorMessage = "Elegir un Usuario es obligatorio")]
 		public int IdUsuario { get; set; }
+		[Display(Name = "Usuario Correspondiente:")]
 		public Usuario? Usuario { get; set; }
 
 		public Pago? Pago { get; set; }
@@ -53,8 +58,6 @@ namespace Oblig2Web.Modelos
 			NumeroPersonas = numP;
 			FechaInicio = fechaI;
 			FechaFinal = fechaF;
-			FechaReserva = DateTime.Now;
-			TiempoEstadia = (int)(fechaF - fechaI).TotalDays;
 			IdUsuario = user;
 		}
 

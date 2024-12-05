@@ -2,3 +2,136 @@
 @model Oblig2Web.Pages.Estadisticas.IndexEstadisticasModel
 @{
 }
+
+<div class="card align-content-center" style="border-color: lightblue">
+    <div class="card-header d-flex" style="background-color: lightblue">
+        <div class="row">
+            <h3 class="text-black-50 me-auto">Huespedes Recurrentes</h3>
+        </div>
+    </div>
+    <div class="card-body">
+        @if (Model.HuespedesList != null && Model.HuespedesList.Any())
+        {
+            <br />
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        Huesped Id:
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.HuespedesList.First().Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.HuespedesList.First().Apellidos)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.HuespedesList.First().FechaNacimiento)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.HuespedesList.First().TipoDocumento)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.HuespedesList.First().Telefono)
+                    </th>
+                    <th>
+                        Correo Electronico:
+                    </th>
+                    <th>
+                        Reservas Realizadas:
+                    </th>
+                </tr>
+                @foreach (var item in Model.HuespedesList) {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.IdHuesped)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Apellidos)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.FechaNacimiento)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.TipoDocumento)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Telefono)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Usuario.CorreoElec)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Usuario.CountRes)
+                        </td>
+                    </tr>
+                }
+            </table>
+        } else 
+        {
+            <p>No hay usuarios en el sistema</p>
+        }
+    </div>
+</div>
+
+<br />
+
+<div class="card align-content-center" style="border-color: lightblue">
+    <div class="card-header d-flex" style="background-color: lightblue">
+        <div class="row">
+            <h3 class="text-black-50 me-auto">Habitaciones Más Reservadas</h3>
+        </div>
+    </div>
+    <div class="card-subtitle">*Y el tiempo que han sido reservadas</div>
+    <div class="card-body">
+        @if (Model.HabitacionesList != null && Model.HabitacionesList.Any())
+        {
+            <br />
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        @Html.DisplayNameFor(m => m.HabitacionesList.First().NumHabitacion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.HabitacionesList.First().TipoHabitacion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.HabitacionesList.First().CantidadPersonas)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.HabitacionesList.First().Tarifa)
+                    </th>
+                    <th>
+                        Reservas Realizadas:
+                    </th>
+                </tr>
+                @foreach (var item in Model.HabitacionesList)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.NumHabitacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.TipoHabitacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.CantidadPersonas)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Tarifa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.CountRes)
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p>No hay habitaciones reservadas</p>
+        }
+    </div>
+</div>

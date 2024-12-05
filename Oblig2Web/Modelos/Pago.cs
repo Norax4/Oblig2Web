@@ -21,7 +21,6 @@ namespace Oblig2Web.Modelos
 		public int Monto { get; set; }
 		[Required]
 		public string? MetodoPago { get; set; }
-		public bool RealizacionPago = false;
 
 		public Pago()
 		{

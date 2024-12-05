@@ -77,7 +77,6 @@ namespace Oblig2Web.Migrations
                     NumeroPersonas = table.Column<int>(type: "int", nullable: false),
                     FechaInicio = table.Column<DateTime>(type: "date", nullable: false),
                     FechaFinal = table.Column<DateTime>(type: "date", nullable: false),
-                    TiempoEstadia = table.Column<int>(type: "int", nullable: false),
                     FechaReserva = table.Column<DateTime>(type: "date", nullable: false),
                     IdUsuario = table.Column<int>(type: "int", nullable: false)
                 },

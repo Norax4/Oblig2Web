@@ -131,7 +131,8 @@ namespace Oblig2Web.Migrations
                     b.Property<DateTime>("FechaInicio")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("FechaReserva")
+                    b.Property<DateTime?>("FechaReserva")
+                        .IsRequired()
                         .HasColumnType("date");
 
                     b.Property<int>("HabitacionId")
@@ -144,9 +145,6 @@ namespace Oblig2Web.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("NumeroPersonas")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TiempoEstadia")
                         .HasColumnType("int");
 
                     b.HasKey("IdReserva");
