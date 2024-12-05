@@ -54,7 +54,7 @@
                             </td>
                             <td>
                                 <a asp-route-id="@item.IdReserva" asp-page="ModificarReserva" class="btn btn-primary btn-sm" style="background-color: cornflowerblue; border: none">Modificar Reserva</a>
-                                <button type="submit" asp-page-handler="Delete" asp-route-id="@item.IdReserva" style="background-color: darkred; border: none" onclick="return confirm('¿Esta seguro de querer borrar el curso?')" class="btn-danger btn-sm">Borrar</button>
+                                <button type="submit" asp-page-handler="Delete" asp-route-id="@item.IdReserva" style="background-color: darkred; border: none" onclick="return confirm('¿Esta seguro de querer cancelar esta reserva?')" class="btn-danger btn-sm">Cancelar</button>
                             </td>
                         </tr>
                     }
