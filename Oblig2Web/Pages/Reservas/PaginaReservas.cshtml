@@ -13,13 +13,16 @@
             @if (Model.Reservas != null && Model.Reservas.Any())
             {
                 <br />
-                <table class="table table-striped border">
-                    <tr class="table-secondary">
+                <table class="table table-primary table-striped border">
+                    <tr class="table-primary text-black-50">
                         <th>
                             @Html.DisplayNameFor(m => m.Reservas.First().Usuario.Nombre)
                         </th>
                         <th>
                             @Html.DisplayNameFor(m => m.Reservas.First().NumHabitacion)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Reservas.First().NumeroPersonas)
                         </th>
                         <th>
                             @Html.DisplayNameFor(m => m.Reservas.First().FechaInicio)
@@ -44,6 +47,9 @@
                                 @Html.DisplayFor(m => item.NumHabitacion)
                             </td>
                             <td>
+                                @Html.DisplayFor(m => item.NumeroPersonas)
+                            </td>
+                            <td>
                                 @Html.DisplayFor(m => item.FechaInicio)
                             </td>
                             <td>
@@ -54,7 +60,7 @@
                             </td>
                             <td>
                                 <a asp-route-id="@item.IdReserva" asp-page="ModificarReserva" class="btn btn-primary btn-sm" style="background-color: cornflowerblue; border: none">Modificar Reserva</a>
-                                <button type="submit" asp-page-handler="Delete" asp-route-id="@item.IdReserva" style="background-color: darkred; border: none" onclick="return confirm('¿Esta seguro de querer borrar el curso?')" class="btn-danger btn-sm">Borrar</button>
+                                <button type="submit" asp-page-handler="Delete" asp-route-id="@item.IdReserva" style="background-color: darkred; border: none" onclick="return confirm('¿Esta seguro de querer cancelar la reserva?')" class="btn-danger btn-sm">Cancelar</button>
                             </td>
                         </tr>
                     }

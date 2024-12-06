@@ -71,7 +71,7 @@ namespace Oblig2Web
 			{
 				new Reserva(habitaciones[2], 2, DateTime.Parse("12/1/2025"), DateTime.Parse("22/1/2025"), usuarios[0]),
 				new Reserva(habitaciones[9], 1, DateTime.Parse("12/1/2025"), DateTime.Parse("22/1/2025"), usuarios[1]),
-				new Reserva(habitaciones[2], 2, DateTime.Parse("14/12/2024"), DateTime.Parse("20/12/2024"), usuarios[3]),
+				new Reserva(habitaciones[2], 2, DateTime.Parse("14/1/2024"), DateTime.Parse("20/1/2024"), usuarios[3]),
 				new Reserva(habitaciones[3], 2, DateTime.Parse("12/1/2025"), DateTime.Parse("22/1/2025"), usuarios[4]),
 				new Reserva(habitaciones[13], 3, DateTime.Parse("12/1/2025"), DateTime.Parse("22/1/2025"), usuarios[2]),
 				new Reserva(habitaciones[18], 4, DateTime.Parse("15/3/2025"), DateTime.Parse("25/3/2025"), usuarios[0]),

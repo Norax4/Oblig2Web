@@ -13,8 +13,8 @@
         @if (Model.HuespedesList != null && Model.HuespedesList.Any())
         {
             <br />
-            <table class="table table-striped border">
-                <tr class="table-secondary">
+            <table class="table table-primary table-striped border">
+                <tr class="table-primary text-black-50">
                     <th>
                         Huesped Id:
                     </th>
@@ -84,13 +84,12 @@
             <h3 class="text-black-50 me-auto">Habitaciones Más Reservadas</h3>
         </div>
     </div>
-    <div class="card-subtitle">*Y el tiempo que han sido reservadas</div>
     <div class="card-body">
         @if (Model.HabitacionesList != null && Model.HabitacionesList.Any())
         {
             <br />
-            <table class="table table-striped border">
-                <tr class="table-secondary">
+            <table class="table table-primary table-striped border">
+                <tr class="table-primary text-black-50">
                     <th>
                         @Html.DisplayNameFor(m => m.HabitacionesList.First().NumHabitacion)
                     </th>

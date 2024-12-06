@@ -4,20 +4,26 @@
     ViewData["Title"] = "Lista de Habitaciones";
 }
 
+<div class="alert alert-primary justify-content-end" style="margin-left: 150px; margin-right: 150px" role="alert">
+    <h4 class="alert-heading text-center">¡Habitaciones!</h4>
+    <hr />
+    <p>Las habitaciones del Hotel Estrella del Mar vienen con todas las comodidades para una estadia placentera y sin estrés alguno.</p>
+    <p>Las habitaciones Suite cuentan con jacuzzis en un balcón interior con vistas a la costa, donde por la noche se pueden ver las luces de la ciudad de Buenos Aires.</p>
+    <p>Elija a su criterio y conveniencia.</p>
+</div>
+
 <div class="card align-content-center" style="border-color: lightblue">
     <div class="card-header d-flex" style="background-color: lightblue">
         <div class="row">
-            <div class="col-sm-6">
                 <h3 class="text-black-50 me-auto">Lista de Habitaciones</h3>
-            </div>
         </div>
     </div>
     <div class="card-body">
         @if (Model.HabitacionesL != null && Model.HabitacionesL.Any())
         {
             <br />
-            <table class="table table-striped border">
-                <tr class="table-secondary">
+            <table class="table table-primary table-striped border-primary">
+                <tr class="table-primary text-black-50">
                     <th>
                         @Html.DisplayNameFor(m => m.HabitacionesL.First().NumHabitacion)
                     </th>

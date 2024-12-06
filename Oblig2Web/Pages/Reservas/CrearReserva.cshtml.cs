@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Oblig2Web.Datos;
 using Oblig2Web.Modelos;
@@ -19,7 +20,7 @@ namespace Oblig2Web.Pages.Reservas
             HabsForEach = contexto.Habitaciones.ToList();
             ResForEach = contexto.Reservas.ToList();
         }
-        [BindProperty] //Esto vincula la pagina con el modelo >>>
+        [BindProperty] 
         public Reserva Reserva { get; set; }
         [BindProperty]
         public string MetodoPago { get; set; }
@@ -35,13 +36,8 @@ namespace Oblig2Web.Pages.Reservas
 
             if (!ModelState.IsValid)
             {
-                Console.WriteLine("no");
-				Console.WriteLine(Reserva.IdUsuario);
-				Console.WriteLine(Reserva.HabitacionId);
-				Console.WriteLine(Reserva.NumeroPersonas);
-				Console.WriteLine(Reserva.FechaInicio);
-				Console.WriteLine(Reserva.FechaFinal);
-				return Page();
+                TempData["errorMessage"] = "Hubo un error al procesar los datos. Intente nuevamente.";
+                return Page();
             }
 
             if (Reserva == null)
@@ -72,41 +68,40 @@ namespace Oblig2Web.Pages.Reservas
                 }
             }
 
-            double tEstadia = (Reserva.FechaFinal - Reserva.FechaInicio).TotalDays;
+			foreach (var res in ResForEach)
+			{
+				if (Reserva.IdUsuario == res.IdUsuario && res.FechaInicio <= Reserva.FechaInicio && res.FechaFinal >= Reserva.FechaFinal)
+				{
+                    TempData["errorMessage"] = "El usuario elegido ya tiene una reserva hecha para las fechas elegidas.";
+					return Page();
+				}
+			}
+
+			foreach (var res in ResForEach)
+			{
+				if (Reserva.HabitacionId == res.HabitacionId && res.FechaInicio <= Reserva.FechaInicio && res.FechaFinal >= Reserva.FechaFinal)
+				{
+                    TempData["errorMessage"] = "La habitación en la que desea hospedarse ya fue reservada para las fechas elegidas.";
+                    return Page();
+				}
+			}
+
+			double tEstadia = (Reserva.FechaFinal - Reserva.FechaInicio).TotalDays;
 
             if (Reserva.FechaFinal <= Reserva.FechaInicio)
             {
-                return Page();
+				TempData["errorMessage"] = "La fecha de llegada al hotel es futura a la fecha de salida. Por favor, corrijalo.";
+				return Page();
             }
             else if (tEstadia > 30)
             {
-                return Page();
+				TempData["errorMessage"] = "El tiempo de su estadia supera los 30 días.";
+				return Page();
             }
             else if (Reserva.HabitacionElegida.CantidadPersonas < Reserva.NumeroPersonas)
             {
-                return Page();
-            }
-
-            foreach (var user in UsuariosForEach)
-            {
-                foreach (var res in ResForEach)
-                {
-                    if (user.IdUsuario == res.IdUsuario && res.FechaInicio == Reserva.FechaInicio)
-                    {
-                        return Page();
-                    }
-                }
-            }
-
-            foreach (var hab in HabsForEach)
-            {
-                foreach (var res in ResForEach)
-                {
-                    if (hab.IdHabitacion == res.HabitacionId && res.FechaInicio == Reserva.FechaInicio)
-                    {
-                        return Page();
-                    }
-                }
+				TempData["errorMessage"] = "El número de personas elegido supera la cantidad de personas que pueden quedarse en la habitación que eligió.";
+				return Page();
             }
 
             Reserva.FechaReserva = DateTime.Now;

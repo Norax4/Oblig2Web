@@ -2,6 +2,8 @@
 @model Oblig2Web.Pages.Reservas.CrearReservaModel
 @{
 	ViewData["Title"] = "Formulario de Reserva";
+	var message = TempData["errorMessage"] as string;
+	var confMessage = Model.Message as string;
 }
 
 <div class="alert alert-primary justify-content-end" style="margin-left: 150px; margin-right: 150px" role="alert">
@@ -11,6 +13,13 @@
 	<p>* No puede hacer más de una reserva para la misma fecha.</p>
 	<p>* No puede elegir hospedar más personas del máximo de la habitación elegida.</p>
 </div>
+
+@if (!string.IsNullOrEmpty(message))
+{
+	<div class="alert alert-danger" role="alert">
+		@message
+	</div>
+}
 
 <div class="card align-content-center" style="border-color: lightblue">
 	<div class="card-header d-flex" style="background-color: lightblue">
@@ -26,7 +35,7 @@
 			<div class="container justify-content-center" style="padding: 30px">
 				<div class="form-group row">
 					<div class="col-9">
-						<label class="col-6 col-form-label" asp-for="Reserva.Usuario"></label>
+						<label class="col-6 col-form-label" asp-for="Reserva.IdUsuario"></label>
 						<div class="col-6">
 							<select asp-for="Reserva.IdUsuario" class="form-control mb-2">
 								<option value="">Elija un Usuario &dArr;</option>
@@ -42,7 +51,7 @@
 
 				<div class="form-group row">
 					<div class="col-9">
-						<label class="col-6 col-form-label" asp-for="Reserva.NumHabitacion"></label>
+						<label class="col-6 col-form-label" asp-for="Reserva.HabitacionId"></label>
 						<div class="col-6">
 							<select asp-for="Reserva.HabitacionId" class="form-control mb-2">
 								<option value="">Elija una Habitación &dArr;</option>

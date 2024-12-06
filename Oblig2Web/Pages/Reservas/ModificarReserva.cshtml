@@ -2,7 +2,23 @@
 @model Oblig2Web.Pages.Reservas.ModificarReservaModel
 @{
 	ViewData["Titulo"] = "Modificación de Reserva";
+	var message = TempData["errorMessage"] as string;
 }
+<div class="alert alert-primary justify-content-end" style="margin-left: 150px; margin-right: 150px" role="alert">
+	<h4 class="alert-heading text-center">¡Recuerde!</h4>
+	<hr />
+	<p>* ¡Las reservas no pueden durar más de 30 días!</p>
+	<p>* No puede hacer más de una reserva para la misma fecha.</p>
+	<p>* No puede elegir hospedar más personas del máximo de la habitación elegida.</p>
+</div>
+
+@if (!string.IsNullOrEmpty(message))
+{
+	<div class="alert alert-danger" role="alert">
+		@message
+	</div>
+}
+
 <div class="card">
 	<div class="card align-content-center" style="border-color: lightblue">
 		<div class="card-header d-flex" style="background-color: lightblue">
@@ -18,10 +34,10 @@
 			<div class="container" style="padding: 30px">
 				<div class="form-group row">
 					<div class="col-9">
-						<label class="col-6 col-form-label" asp-for="Reserva.Usuario"></label>
+						<label class="col-6 col-form-label" asp-for="Reserva.IdUsuario"></label>
 						<div class="col-6">
 							<select asp-for="Reserva.IdUsuario" class="form-control mb-2">
-								<option value="">Elija una Habitación &dArr;</option>
+								<option value="">Elija un Usuario &dArr;</option>
 								@foreach (var item in Model.UsuariosForEach)
 								{
 									<option value="@item.IdUsuario">@item.Nombre </option>
@@ -34,7 +50,7 @@
 
 				<div class="form-group row">
 					<div class="col-9">
-						<label class="col-6 col-form-label" asp-for="Reserva.NumHabitacion"></label>
+						<label class="col-6 col-form-label" asp-for="Reserva.HabitacionId"></label>
 						<div class="col-6">
 							<select asp-for="Reserva.HabitacionId" class="form-control mb-2">
 								<option value="">Elija una Habitación &dArr;</option>
@@ -79,6 +95,20 @@
 						<div class="col-6">
 							<input asp-for="Reserva.FechaFinal" class="form-control mb-2" type="date" />
 							<span asp-validation-for="Reserva.FechaFinal" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-9">
+						<label class="col-6 col-form-label" asp-for="MetodoPago">Metodo de pago:</label>
+						<div class="col-6">
+							<select asp-for="MetodoPago" class="form-control mb-2">
+								<option value="Tarjeta">Tarjeta</option>
+								<option value="Cheque">Cheque</option>
+								<option value="Efectivo">Efectivo</option>
+							</select>
+							<span asp-validation-for="MetodoPago" class="text-danger"></span>
 						</div>
 					</div>
 				</div>

@@ -12,7 +12,6 @@ namespace Oblig2Web.Pages.Reservas
         public PaginaReservasModel(AppDbContext contexto)
         {
             _appContext = contexto;
-            Usuarios = contexto.Usuarios.ToList();
         }
         public IEnumerable<Reserva> Reservas { get; set; }
         public IEnumerable<Usuario> Usuarios { get; set; }
@@ -23,7 +22,8 @@ namespace Oblig2Web.Pages.Reservas
         public string Message { get; set; }
         public async Task OnGet()
         {
-            Reservas = await _appContext.Reservas.ToListAsync();
+			Usuarios = await _appContext.Usuarios.ToListAsync();
+			Reservas = await _appContext.Reservas.ToListAsync();
             Pagos = await _appContext.Pagos.ToListAsync();
             foreach (var item in Reservas)
             {
@@ -49,12 +49,11 @@ namespace Oblig2Web.Pages.Reservas
                 _appContext.Reservas.Remove(reserva);
                 await _appContext.SaveChangesAsync();
                 Message = "Reserva borrada correctamente";
+                return RedirectToPage();
             } else
             {
                 return NotFound();
             }
-
-            return RedirectToPage();
         }
     }
 }

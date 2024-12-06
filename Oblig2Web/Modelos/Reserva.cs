@@ -10,7 +10,8 @@ namespace Oblig2Web.Modelos
 		public int IdReserva { get; set; }
 
 		[Required(ErrorMessage = "Elegir una Habitación es obligatorio")]
-		[ForeignKey("Habitacion")]
+        [Display(Name = "Numero de la Habitación:")]
+        [ForeignKey("Habitacion")]
 		public int HabitacionId { get; set; }
 		public Habitacion? HabitacionElegida { get; set; }
 
@@ -33,16 +34,15 @@ namespace Oblig2Web.Modelos
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime FechaFinal { get; set; }
 		public int TiempoEstadia = 0;
-		[Required]
         [Display(Name = "Fecha de Reserva:")]
         [Column(TypeName = "date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? FechaReserva { get; set; }
 
 		[ForeignKey("Usuario")]
-		[Required(ErrorMessage = "Elegir un Usuario es obligatorio")]
+        [Display(Name = "Usuario Correspondiente:")]
+        [Required(ErrorMessage = "Elegir un Usuario es obligatorio")]
 		public int IdUsuario { get; set; }
-		[Display(Name = "Usuario Correspondiente:")]
 		public Usuario? Usuario { get; set; }
 
 		public Pago? Pago { get; set; }
